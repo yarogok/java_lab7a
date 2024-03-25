@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Entity
 @Table(name = "tasks")
@@ -18,12 +19,13 @@ public class Task {
 
     private String name;
     private String description;
-    private LocalDateTime createDateTime;
+    private String createDateTime;
     private boolean completed;
 
-
     public Task() {
-        this.createDateTime = LocalDateTime.now();
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        this.createDateTime = now.format(formatter);
         this.completed = false;
     }
 
@@ -59,11 +61,11 @@ public class Task {
         this.completed = completed;
     }
 
-    public LocalDateTime getCreateDateTime() {
+    public String getCreateDateTime() {
         return createDateTime;
     }
 
-    public void setCreateDateTime(LocalDateTime currentDateTime) {
+    public void setCreateDateTime(String currentDateTime) {
         this.createDateTime = currentDateTime;
     }
 }
