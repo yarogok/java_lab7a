@@ -31,7 +31,7 @@
 <body>
 <h2>Видалення завдання</h2>
 
-<form action="/view-tasks/delete-task" method="post">
+<form th:action="@{/view-tasks/delete-task}" method="post">
     <label for="taskId">Введіть ID:</label>
     <input type="number" id="taskId" name="taskId" required min="1">
     <br>

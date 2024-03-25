@@ -47,11 +47,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/view-tasks/add-task", "/view-tasks/delete-task", "/view-tasks/edit-task/**").hasRole("ADMIN")
+                .antMatchers("/","/view-tasks/edit-task/**", "/view-tasks/add-task", "/view-tasks/delete-task").hasRole("ADMIN")
                 .antMatchers("/view-tasks").hasAnyRole("ADMIN", "USER")
                 .anyRequest().authenticated()
                 .and()
-                .formLogin().loginPage("/login").permitAll()
+                .formLogin().loginPage("/login").defaultSuccessUrl("/view-tasks").permitAll()
                 .and()
                 .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).permitAll()
                 .and()
@@ -59,7 +59,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .accessDeniedPage("/403");
     }
 
-    //Метод для формування ствндартної сторінки
+    //Метод для формування стандартної сторінки входу
     /*@Override
     protected void configure(HttpSecurity http) throws Exception {
         http

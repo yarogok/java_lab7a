@@ -1,6 +1,5 @@
 package spring.java_lab7a.Controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -13,8 +12,11 @@ import java.util.List;
 @RequestMapping("/view-tasks")
 public class TaskController {
 
-    @Autowired
-    private TaskRepository taskRepository;
+    private final TaskRepository taskRepository;
+
+    public TaskController(TaskRepository taskRepository) {
+        this.taskRepository = taskRepository;
+    }
 
     @GetMapping
     public String showTasks(Model model) {
@@ -54,13 +56,15 @@ public class TaskController {
     }
 
     @PostMapping("/add-task")
-    public String addTask(@ModelAttribute("newTask") Task newTask, Model model) {
+    public String addTask(@ModelAttribute("newTask") Task newTask) {
         taskRepository.save(newTask);
         return "redirect:/view-tasks";
     }
 
     @GetMapping("/delete-task")
     public String showDeleteTaskForm(Model model) {
+        List<Task> taskList = taskRepository.findAll();
+        model.addAttribute("taskList", taskList);
         return "delete-task";
     }
 
